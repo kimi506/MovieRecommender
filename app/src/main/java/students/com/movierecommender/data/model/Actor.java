@@ -1,20 +1,12 @@
 package students.com.movierecommender.data.model;
 
-import com.google.gson.annotations.SerializedName;
-
-import java.util.List;
-
 /**
  * Created by Kamil Gonska on sty, 2019
  */
 public class Actor {
-//    @SerializedName("Id")
     private Long id;
-//    @SerializedName("Name")
     private String name;
-//    @SerializedName("Surname")
     private String surname;
-//    @SerializedName("Image")
     private byte[] image;
 
     public Actor(Long id, String name, String surname, byte[] image) {

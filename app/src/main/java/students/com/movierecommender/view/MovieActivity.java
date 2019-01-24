@@ -4,7 +4,9 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.annotations.Nullable;
 import students.com.movierecommender.MyApplication;
@@ -22,6 +24,9 @@ public class MovieActivity extends AppCompatActivity {
     ViewModelFactory viewModelFactory;
     MovieViewModel movieViewModel;
 
+    @BindView(R.id.id_movie)
+    EditText idMovie;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,14 +36,23 @@ public class MovieActivity extends AppCompatActivity {
         ((MyApplication) getApplication()).getAppComponent().doInjection(this);
 
         movieViewModel = ViewModelProviders.of(this, viewModelFactory).get(MovieViewModel.class);
-        movieViewModel.movieResponse().observe(this, this::renderMovieList);
+        movieViewModel.getAllMovies().observe(this, this::renderMovieList);
+        movieViewModel.getMovie().observe(this, this::renderMovie);
     }
 
     private void renderMovieList(List<Movie> movies) {
         Toast.makeText(MovieActivity.this, movies.get(0).toString(), Toast.LENGTH_SHORT).show();
     }
 
+    private void renderMovie(Movie movies) {
+        Toast.makeText(MovieActivity.this, movies.toString(), Toast.LENGTH_SHORT).show();
+    }
+
     public void showAllMovie(View view) {
-        movieViewModel.getAllMovies();
+        movieViewModel.hitAllMovies();
+    }
+
+    public void showMovieById(View view) {
+        movieViewModel.hitMovieById(Integer.parseInt(idMovie.getText().toString()));
     }
 }

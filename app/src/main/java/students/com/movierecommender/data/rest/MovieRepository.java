@@ -21,6 +21,10 @@ public class MovieRepository {
     }
 
     public Observable<List<Movie>> getAllMovies() {
-            return movieService.getAllMovies();
+        return movieService.getAllMovies();
+    }
+
+    public Observable<Movie> getMovieById(Integer id) {
+        return movieService.getMovieById(id);
     }
 }

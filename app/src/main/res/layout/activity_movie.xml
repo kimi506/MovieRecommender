@@ -28,6 +28,28 @@
                 android:onClick="showAllMovie"
         />
 
+        <EditText
+                android:id="@+id/id_movie"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:gravity="center"
+                android:hint="@string/id_movie"
+                android:maxLength="14" />
+
+        <android.support.design.button.MaterialButton
+                android:id="@+id/get_movie_by_id_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:textAllCaps="false"
+                android:textSize="16sp"
+                android:layout_marginTop="15dp"
+                android:text="@string/get_movie"
+                android:textColor="@color/white"
+                android:onClick="showMovieById"
+        />
+
 
     </LinearLayout>
 

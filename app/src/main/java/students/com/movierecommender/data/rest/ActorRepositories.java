@@ -1,7 +1,6 @@
 package students.com.movierecommender.data.rest;
 
-import android.arch.lifecycle.MutableLiveData;
-import io.reactivex.Single;
+import io.reactivex.Observable;
 import students.com.movierecommender.data.model.Actor;
 
 import javax.inject.Inject;
@@ -20,8 +19,12 @@ public class ActorRepositories {
         this.actorService = actorService;
     }
 
-    public Single<List<Actor>> getAllActors(){
-        final MutableLiveData<List<Actor>> actors =new MutableLiveData<>();
+    public Observable<List<Actor>> getAllActors() {
         return actorService.getAllActors();
     }
+
+    public Observable<Actor> getActorById(Integer id) {
+        return actorService.getActorById(id);
+    }
+
 }

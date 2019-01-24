@@ -9,21 +9,13 @@ public class Movie {
     private Integer id;
     private String description;
     private String name;
-    private Integer rating;
+    private Float rating;
     private byte[] frontImage;
     private Integer productionYear;
     private Review reviews;
     private MovieType movieTypes;
     private Director directors;
     private Actor actors;
-
-    public Integer getProductionYear() {
-        return productionYear;
-    }
-
-    public void setProductionYear(Integer productionYear) {
-        this.productionYear = productionYear;
-    }
 
     public Integer getId() {
         return id;
@@ -49,11 +41,11 @@ public class Movie {
         this.name = name;
     }
 
-    public Integer getRating() {
+    public Float getRating() {
         return rating;
     }
 
-    public void setRating(Integer rating) {
+    public void setRating(Float rating) {
         this.rating = rating;
     }
 
@@ -63,6 +55,14 @@ public class Movie {
 
     public void setFrontImage(byte[] frontImage) {
         this.frontImage = frontImage;
+    }
+
+    public Integer getProductionYear() {
+        return productionYear;
+    }
+
+    public void setProductionYear(Integer productionYear) {
+        this.productionYear = productionYear;
     }
 
     public Review getReviews() {
