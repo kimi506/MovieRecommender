@@ -4,4 +4,6 @@
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="or">OR</string>
+    <string name="id_movie">Enter identity movie</string>
+    <string name="get_movie">Show movie</string>
 </resources>
