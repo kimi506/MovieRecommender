@@ -1,4 +1,4 @@
-package students.com.movierecommender.data.model;
+package students.com.movierecommender.data.entity;
 
 /**
  * Created by Kamil Gonska on sty, 2019
@@ -8,6 +8,9 @@ public class Actor {
     private String name;
     private String surname;
     private byte[] image;
+
+    public Actor() {
+    }
 
     public Actor(Long id, String name, String surname, byte[] image) {
         this.id = id;

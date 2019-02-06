@@ -1,16 +1,28 @@
 package students.com.movierecommender.di;
 
 
+import android.app.Application;
+import dagger.BindsInstance;
 import dagger.Component;
-import students.com.movierecommender.view.MovieActivity;
+import dagger.android.support.AndroidSupportInjectionModule;
+import students.com.movierecommender.MyApplication;
 
 import javax.inject.Singleton;
 
 /**
  * Created by Kamil Gonska on sty, 2019
  */
-@Component(modules = {AppModule.class, UtilsModule.class})
 @Singleton
+@Component(modules = {AndroidSupportInjectionModule.class, AppModule.class, UtilsModule.class, BuildersModule.class})
 public interface AppComponent {
-    void doInjection(MovieActivity movieActivity);
+
+    @Component.Builder
+    interface Builder {
+        @BindsInstance
+        Builder application(Application application);
+
+        AppComponent build();
+    }
+
+    void inject(MyApplication myApplication);
 }

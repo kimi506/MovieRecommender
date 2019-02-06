@@ -8,10 +8,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dagger.android.AndroidInjection;
 import io.reactivex.annotations.Nullable;
 import students.com.movierecommender.MyApplication;
 import students.com.movierecommender.R;
-import students.com.movierecommender.data.model.Movie;
+import students.com.movierecommender.data.entity.Movie;
 import students.com.movierecommender.utils.ViewModelFactory;
 import students.com.movierecommender.viewmodel.MovieViewModel;
 
@@ -29,11 +30,11 @@ public class MovieActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie);
 
         ButterKnife.bind(this);
-        ((MyApplication) getApplication()).getAppComponent().doInjection(this);
 
         movieViewModel = ViewModelProviders.of(this, viewModelFactory).get(MovieViewModel.class);
         movieViewModel.getAllMovies().observe(this, this::renderMovieList);

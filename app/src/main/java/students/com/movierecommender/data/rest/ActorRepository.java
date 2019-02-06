@@ -1,7 +1,7 @@
 package students.com.movierecommender.data.rest;
 
 import io.reactivex.Observable;
-import students.com.movierecommender.data.model.Actor;
+import students.com.movierecommender.data.entity.Actor;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -11,11 +11,11 @@ import java.util.List;
  * Created by Kamil Gonska on sty, 2019
  */
 @Singleton
-public class ActorRepositories {
+public class ActorRepository {
     private final ActorService actorService;
 
     @Inject
-    public ActorRepositories(ActorService actorService) {
+    public ActorRepository(ActorService actorService) {
         this.actorService = actorService;
     }
 

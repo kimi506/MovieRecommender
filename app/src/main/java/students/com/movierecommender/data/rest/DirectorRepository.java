@@ -1,7 +1,7 @@
 package students.com.movierecommender.data.rest;
 
 import io.reactivex.Observable;
-import students.com.movierecommender.data.model.Director;
+import students.com.movierecommender.data.entity.Director;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
