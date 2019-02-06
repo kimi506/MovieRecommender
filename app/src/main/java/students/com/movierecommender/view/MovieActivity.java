@@ -2,9 +2,12 @@ package students.com.movierecommender.view;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -16,16 +19,21 @@ import students.com.movierecommender.utils.ViewModelFactory;
 import students.com.movierecommender.viewmodel.MovieViewModel;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MovieActivity extends AppCompatActivity {
+
+    List<Movie> movies;
+    ListView listView;
+    private static MovieAdapter adapter;
 
     @Inject
     ViewModelFactory viewModelFactory;
     MovieViewModel movieViewModel;
 
-    @BindView(R.id.id_movie)
-    EditText idMovie;
+//    @BindView(R.id.id_movie)
+//    EditText idMovie;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,10 +46,18 @@ public class MovieActivity extends AppCompatActivity {
         movieViewModel = ViewModelProviders.of(this, viewModelFactory).get(MovieViewModel.class);
         movieViewModel.getAllMovies().observe(this, this::renderMovieList);
         movieViewModel.getMovie().observe(this, this::renderMovie);
+
+        listView = findViewById(R.id.list);
+
+        movieViewModel.hitAllMovies();
+
     }
 
     private void renderMovieList(List<Movie> movies) {
-        Toast.makeText(MovieActivity.this, movies.get(0).toString(), Toast.LENGTH_SHORT).show();
+        this.movies = movies;
+
+        adapter = new MovieAdapter(movies, getApplicationContext());
+        listView.setAdapter(adapter);
     }
 
     private void renderMovie(Movie movies) {
@@ -52,7 +68,7 @@ public class MovieActivity extends AppCompatActivity {
         movieViewModel.hitAllMovies();
     }
 
-    public void showMovieById(View view) {
-        movieViewModel.hitMovieById(Integer.parseInt(idMovie.getText().toString()));
-    }
+//    public void showMovieById(View view) {
+//        movieViewModel.hitMovieById(Integer.parseInt(idMovie.getText().toString()));
+//    }
 }
