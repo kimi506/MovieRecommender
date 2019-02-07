@@ -6,4 +6,7 @@
     <string name="or">OR</string>
     <string name="id_movie">Enter identity movie</string>
     <string name="get_movie">Show movie</string>
+    <string name="recommendations">For me</string>
+    <string name="actors">Actors</string>
+    <string name="movies">Movies</string>
 </resources>
