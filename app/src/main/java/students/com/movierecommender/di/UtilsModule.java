@@ -2,10 +2,8 @@ package students.com.movierecommender.di;
 
 import android.app.Application;
 import android.arch.lifecycle.ViewModelProvider;
-import android.arch.persistence.room.Room;
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import android.util.Base64;
+import com.google.gson.*;
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.OkHttpClient;
@@ -36,8 +34,10 @@ public class UtilsModule {
     @Provides
     Gson provideGson() {
         GsonBuilder builder =
-                new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
-        return builder.setLenient().create();
+                new GsonBuilder();
+        builder.registerTypeAdapter(byte[].class, (JsonSerializer<byte[]>) (src, typeOfSrc, context) -> new JsonPrimitive(Base64.encodeToString(src, Base64.NO_WRAP)));
+        builder.registerTypeAdapter(byte[].class, (JsonDeserializer<byte[]>) (json, typeOfT, context) -> Base64.decode(json.getAsString(), Base64.NO_WRAP));
+        return builder.create();
     }
 
     @Provides
