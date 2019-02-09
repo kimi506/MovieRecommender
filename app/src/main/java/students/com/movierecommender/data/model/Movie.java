@@ -1,11 +1,12 @@
 package students.com.movierecommender.data.model;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
 /**
  * Created by Kamil Gonska on sty, 2019
  */
-public class Movie {
+public class Movie implements Serializable {
     private Integer id;
     private String description;
     private String name;

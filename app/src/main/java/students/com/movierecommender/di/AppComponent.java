@@ -2,6 +2,7 @@ package students.com.movierecommender.di;
 
 
 import dagger.Component;
+import students.com.movierecommender.view.MainActivity;
 import students.com.movierecommender.view.MovieActivity;
 
 import javax.inject.Singleton;
@@ -12,5 +13,5 @@ import javax.inject.Singleton;
 @Component(modules = {AppModule.class, UtilsModule.class})
 @Singleton
 public interface AppComponent {
-    void doInjection(MovieActivity movieActivity);
+    void doInjection(MainActivity movieActivity);
 }

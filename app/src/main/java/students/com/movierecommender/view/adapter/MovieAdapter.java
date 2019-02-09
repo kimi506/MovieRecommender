@@ -1,4 +1,4 @@
-package students.com.movierecommender.view;
+package students.com.movierecommender.view.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
