@@ -10,7 +10,7 @@ import students.com.movierecommender.data.rest.MovieRepository;
 
 import java.util.Arrays;
 import java.util.List;
-
+ 
 /**
  * Created by Kamil Gonska on sty, 2019
  */
@@ -19,6 +19,7 @@ public class MovieViewModel extends ViewModel {
     private MovieRepository movieRepository;
     private final CompositeDisposable disposables = new CompositeDisposable();
     private final MutableLiveData<List<Movie>> moviesLiveData = new MutableLiveData<>();
+    private final MutableLiveData<List<Movie>> moviesRecommendedLiveData = new MutableLiveData<>();
     private final MutableLiveData<Movie> movieLiveData = new MutableLiveData<>();
 
     public MovieViewModel(MovieRepository movieRepository) {
@@ -31,6 +32,10 @@ public class MovieViewModel extends ViewModel {
 
     public MutableLiveData<Movie> getMovie() {
         return movieLiveData;
+    }
+
+    public MutableLiveData<List<Movie>> getMoviesRecommendedLiveData() {
+        return moviesRecommendedLiveData;
     }
 
     public void hitAllMovies() {
@@ -51,6 +56,17 @@ public class MovieViewModel extends ViewModel {
                         movieLiveData::setValue,
                         throwable ->
                                 movieLiveData.setValue(new Movie())
+                ));
+    }
+
+    public void hitRecommendedMovie(Integer idUser) {
+        disposables.add(movieRepository.getRecommendedMovies(idUser)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        moviesRecommendedLiveData::setValue,
+                        throwable ->
+                                getMoviesRecommendedLiveData().setValue(Arrays.asList(new Movie()))
                 ));
     }
 

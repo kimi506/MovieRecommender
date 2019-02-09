@@ -3,6 +3,7 @@ package students.com.movierecommender.data.rest;
 import io.reactivex.Observable;
 import students.com.movierecommender.data.entity.Movie;
 import students.com.movierecommender.database.dao.LocalMovieService;
+import students.com.movierecommender.utils.Urls;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -34,6 +35,11 @@ public class MovieRepository {
 
     public Observable<Movie> getMovieById(Integer id) {
         return movieService.getMovieById(id);
+    }
+
+    public Observable<List<Movie>> getRecommendedMovies(Integer idUser){
+        String token = "Bearer " + Urls.TOKEN;
+        return movieService.getRecommendedMovies(token, idUser);
     }
 
 }
