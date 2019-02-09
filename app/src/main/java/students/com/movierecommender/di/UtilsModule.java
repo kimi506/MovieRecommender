@@ -12,8 +12,7 @@ import okhttp3.Request;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import students.com.movierecommender.data.rest.MovieRepository;
-import students.com.movierecommender.data.rest.MovieService;
+import students.com.movierecommender.data.rest.*;
 import students.com.movierecommender.database.DatabaseConfig;
 import students.com.movierecommender.database.dao.LocalMovieService;
 import students.com.movierecommender.database.dao.LocalMovieServiceImpl;
@@ -54,6 +53,16 @@ public class UtilsModule {
     @Provides
     MovieService provideMovieService(Retrofit retrofit) {
         return retrofit.create(MovieService.class);
+    }
+
+    @Provides
+    AuthService provideAuthService(Retrofit retrofit) {
+        return retrofit.create(AuthService.class);
+    }
+
+    @Provides
+    ActorService provideActorService(Retrofit retrofit) {
+        return retrofit.create(ActorService.class);
     }
 
     @Provides
@@ -103,7 +112,17 @@ public class UtilsModule {
     }
 
     @Provides
-    ViewModelProvider.Factory provideViewModelFactory(MovieRepository movieRepository) {
-        return new ViewModelFactory(movieRepository);
+    AuthRepository provideAuthRepository(AuthService authService) {
+        return new AuthRepository(authService);
+    }
+
+    @Provides
+    ActorRepository provideActorRepository(ActorService actorService) {
+        return new ActorRepository(actorService);
+    }
+
+    @Provides
+    ViewModelProvider.Factory provideViewModelFactory(MovieRepository movieRepository, ActorRepository actorRepository) {
+        return new ViewModelFactory(movieRepository, actorRepository);
     }
 }
