@@ -5,7 +5,7 @@ import android.arch.lifecycle.ViewModel;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
-import students.com.movierecommender.data.model.Movie;
+import students.com.movierecommender.data.entity.Movie;
 import students.com.movierecommender.data.rest.MovieRepository;
 
 import java.util.Arrays;
@@ -38,7 +38,7 @@ public class MovieViewModel extends ViewModel {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        result -> moviesLiveData.setValue(result),
+                        moviesLiveData::setValue,
                         throwable -> moviesLiveData.setValue(Arrays.asList(new Movie()))
                 ));
     }
@@ -48,8 +48,9 @@ public class MovieViewModel extends ViewModel {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        result -> movieLiveData.setValue(result),
-                        throwable -> movieLiveData.setValue(new Movie())
+                        movieLiveData::setValue,
+                        throwable ->
+                                movieLiveData.setValue(new Movie())
                 ));
     }
 

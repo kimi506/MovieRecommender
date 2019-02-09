@@ -1,38 +1,38 @@
 package students.com.movierecommender;
 
+import android.app.Activity;
 import android.app.Application;
-import android.content.Context;
-import students.com.movierecommender.di.AppComponent;
-import students.com.movierecommender.di.AppModule;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.HasActivityInjector;
 import students.com.movierecommender.di.DaggerAppComponent;
-import students.com.movierecommender.di.UtilsModule;
+
+import javax.inject.Inject;
 
 
 /**
  * Created by Kamil Gonska on sty, 2019
  */
-
-public class MyApplication extends Application {
-    AppComponent appComponent;
-    Context context;
+public class MyApplication extends Application implements HasActivityInjector {
+    @Inject
+    DispatchingAndroidInjector<Activity> dispatchingAndroidInjector;
 
     @Override
     public void onCreate() {
-        try {
-            super.onCreate();
-            context = this;
-            appComponent = DaggerAppComponent.builder().appModule(new AppModule(this)).utilsModule(new UtilsModule()).build();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
+        super.onCreate();
 
-    public AppComponent getAppComponent() {
-        return appComponent;
+        DaggerAppComponent
+                .builder()
+                .application(this)
+                .build()
+                .inject(this);
     }
 
     @Override
-    protected void attachBaseContext(Context context) {
-        super.attachBaseContext(context);
+    public DispatchingAndroidInjector<Activity> activityInjector() {
+        return dispatchingAndroidInjector;
+    }
+
+    private void initDagger() {
+        DaggerAppComponent.builder().build().inject(this);
     }
 }

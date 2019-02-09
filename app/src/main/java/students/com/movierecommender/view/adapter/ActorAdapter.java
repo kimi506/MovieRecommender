@@ -15,40 +15,32 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import students.com.movierecommender.R;
+import students.com.movierecommender.data.entity.Actor;
 import students.com.movierecommender.data.entity.Movie;
 
 import java.util.List;
 
-
-/**
- * Created by db on 09/02/19.
- */
-public class MovieAdapter extends ArrayAdapter<Movie> implements View.OnClickListener {
+public class ActorAdapter extends ArrayAdapter<Actor> implements View.OnClickListener {
 
     private Context mContext;
 
     // View lookup cache
     private static class ViewHolder {
-        TextView txtName;
-        RatingBar ratingBar;
-        ImageView frontImage;
+        TextView txtNameAndSurname;
+        ImageView image;
         ImageView info;
     }
 
-    public MovieAdapter(List<Movie> data, Context context) {
-        super(context, R.layout.movie_item_row, data);
+    public ActorAdapter(List<Actor> data, Context context) {
+        super(context, R.layout.actor_item_row, data);
         this.mContext = context;
     }
 
     @Override
     public void onClick(View v) {
-        int position = (Integer) v.getTag();
-        Movie movieModel = getItem(position);
-
         switch (v.getId()) {
             case R.id.item_info:
-                Snackbar.make(v, "Type: " + movieModel.getMovieTypes() +
-                        "\nProduction year: " + movieModel.getProductionYear(), Snackbar.LENGTH_LONG)
+                Snackbar.make(v, "Click on actor to get more info", Snackbar.LENGTH_LONG)
                         .setAction("No action", null).show();
                 break;
         }
@@ -58,24 +50,23 @@ public class MovieAdapter extends ArrayAdapter<Movie> implements View.OnClickLis
 
     @Override
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
-        Movie movieModel = getItem(position);
-        ViewHolder viewHolder;
+        Actor actorModel = getItem(position);
+        ActorAdapter.ViewHolder viewHolder;
 
         final View result;
         if (convertView == null) {
-            viewHolder = new ViewHolder();
+            viewHolder = new ActorAdapter.ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.movie_item_row, parent, false);
-            viewHolder.txtName = convertView.findViewById(R.id.name);
-            viewHolder.ratingBar = convertView.findViewById(R.id.rating);
-            viewHolder.frontImage = convertView.findViewById(R.id.front_image);
+            convertView = inflater.inflate(R.layout.actor_item_row, parent, false);
+            viewHolder.txtNameAndSurname = convertView.findViewById(R.id.name_and_surname);
+            viewHolder.image = convertView.findViewById(R.id.image);
             viewHolder.info = convertView.findViewById(R.id.item_info);
 
             result = convertView;
 
             convertView.setTag(viewHolder);
         } else {
-            viewHolder = (ViewHolder) convertView.getTag();
+            viewHolder = (ActorAdapter.ViewHolder) convertView.getTag();
             result = convertView;
         }
 
@@ -83,11 +74,10 @@ public class MovieAdapter extends ArrayAdapter<Movie> implements View.OnClickLis
         result.startAnimation(animation);
         lastPosition = position;
 
-        Bitmap bmp = BitmapFactory.decodeByteArray(movieModel.getFrontImage(), 0, movieModel.getFrontImage().length);
+        Bitmap bmp = BitmapFactory.decodeByteArray(actorModel.getImage(), 0, actorModel.getImage().length);
 
-        viewHolder.txtName.setText(movieModel.getName());
-        viewHolder.ratingBar.setRating(movieModel.getRating());
-        viewHolder.frontImage.setImageBitmap(Bitmap.createScaledBitmap(bmp, bmp.getWidth(),
+        viewHolder.txtNameAndSurname.setText(actorModel.getName() + " " + actorModel.getSurname());
+        viewHolder.image.setImageBitmap(Bitmap.createScaledBitmap(bmp, bmp.getWidth(),
                 bmp.getHeight(), false));
         viewHolder.info.setOnClickListener(this);
         viewHolder.info.setTag(position);

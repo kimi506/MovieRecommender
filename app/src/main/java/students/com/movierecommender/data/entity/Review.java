@@ -1,4 +1,4 @@
-package students.com.movierecommender.data.model;
+package students.com.movierecommender.data.entity;
 
 /**
  * Created by Kamil Gonska on sty, 2019

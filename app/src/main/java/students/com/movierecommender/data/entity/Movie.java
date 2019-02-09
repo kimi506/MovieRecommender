@@ -1,22 +1,42 @@
-package students.com.movierecommender.data.model;
+package students.com.movierecommender.data.entity;
+
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Date;
 
 /**
  * Created by Kamil Gonska on sty, 2019
  */
+@Entity
 public class Movie implements Serializable {
+    @PrimaryKey
     private Integer id;
     private String description;
     private String name;
     private Float rating;
     private byte[] frontImage;
     private Integer productionYear;
+    @Ignore
     private Review reviews;
+    @Ignore
     private MovieType movieTypes;
+    @Ignore
     private Director directors;
+    @Ignore
     private Actor actors;
+    private Date lastRefresh;
+
+    public Date getLastRefresh() {
+        return lastRefresh;
+    }
+
+    public void setLastRefresh(Date lastRefresh) {
+        this.lastRefresh = lastRefresh;
+    }
 
     public Integer getId() {
         return id;

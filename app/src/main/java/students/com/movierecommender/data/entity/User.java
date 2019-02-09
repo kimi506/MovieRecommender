@@ -1,4 +1,4 @@
-package students.com.movierecommender.data.model;
+package students.com.movierecommender.data.entity;
 
 import java.util.List;
 

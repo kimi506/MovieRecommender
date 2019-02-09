@@ -3,6 +3,7 @@ package students.com.movierecommender.di;
 import android.content.Context;
 import dagger.Module;
 import dagger.Provides;
+import students.com.movierecommender.MyApplication;
 
 import javax.inject.Singleton;
 
@@ -12,15 +13,9 @@ import javax.inject.Singleton;
 
 @Module
 public class AppModule {
-    private Context context;
-
-    public AppModule(Context context) {
-        this.context = context;
-    }
 
     @Provides
-    @Singleton
-    Context provideContext() {
-        return context;
+    Context provideContext(MyApplication application) {
+        return application.getApplicationContext();
     }
 }

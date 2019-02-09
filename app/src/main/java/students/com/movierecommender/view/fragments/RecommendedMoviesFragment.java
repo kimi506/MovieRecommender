@@ -15,7 +15,7 @@ import android.widget.Toast;
 import butterknife.ButterKnife;
 import students.com.movierecommender.MyApplication;
 import students.com.movierecommender.R;
-import students.com.movierecommender.data.model.Movie;
+import students.com.movierecommender.data.entity.Movie;
 import students.com.movierecommender.utils.ViewModelFactory;
 import students.com.movierecommender.view.MovieActivity;
 import students.com.movierecommender.view.adapter.MovieAdapter;
@@ -26,8 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RecommendedMoviesFragment extends Fragment {
-
-    private MovieAdapter adapter;
 
     public static Fragment newInstance(List<Movie> movies)
     {
@@ -43,7 +41,7 @@ public class RecommendedMoviesFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_recommended_movies, container, false);
         ListView listView = rootView.findViewById(R.id.list);
-        adapter = new MovieAdapter((ArrayList<Movie>)getArguments().getSerializable("movies"), getActivity().getApplicationContext());
+        MovieAdapter adapter = new MovieAdapter((ArrayList<Movie>) getArguments().getSerializable("movies"), getActivity().getApplicationContext());
         listView.setAdapter(adapter);
         return rootView;
     }

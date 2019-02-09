@@ -4,7 +4,7 @@ import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
-import students.com.movierecommender.data.model.Review;
+import students.com.movierecommender.data.entity.Review;
 import students.com.movierecommender.utils.Urls;
 
 import java.util.List;

@@ -3,7 +3,7 @@ package students.com.movierecommender.data.rest;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
-import students.com.movierecommender.data.model.Movie;
+import students.com.movierecommender.data.entity.Movie;
 import students.com.movierecommender.utils.Urls;
 
 import java.util.List;
