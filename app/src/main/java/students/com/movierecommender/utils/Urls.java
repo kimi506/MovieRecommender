@@ -9,4 +9,8 @@ public class Urls {
     public static final String ACTORS = "actors/";
     public static final String DIRECTORS = "directors/";
     public static final String REVIEWS = "reviews/";
+    public static final String AUTH = "authenticate/";
+    public static final String USERS = "users/";
+    public static final String RECOMMENDATION = "recommendation/";
+    public static String TOKEN ="";
 }
