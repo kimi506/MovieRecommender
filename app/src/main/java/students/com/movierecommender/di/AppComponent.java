@@ -15,7 +15,6 @@ import javax.inject.Singleton;
 @Singleton
 @Component(modules = {AndroidSupportInjectionModule.class, AppModule.class, UtilsModule.class, BuildersModule.class})
 public interface AppComponent {
-
     @Component.Builder
     interface Builder {
         @BindsInstance

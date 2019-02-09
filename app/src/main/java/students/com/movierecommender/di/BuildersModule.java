@@ -2,7 +2,9 @@ package students.com.movierecommender.di;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
-import students.com.movierecommender.view.MovieActivity;
+
+import students.com.movierecommender.view.LoginActivity;
+import students.com.movierecommender.view.MainActivity;
 
 /**
  * Created by Kamil Gonska on sty, 2019
@@ -11,6 +13,8 @@ import students.com.movierecommender.view.MovieActivity;
 public abstract class BuildersModule {
 
     @ContributesAndroidInjector(modules = UtilsModule.class)
-    abstract MovieActivity bindMovieActivity();
+    abstract MainActivity bindMainActivity();
 
+    @ContributesAndroidInjector(modules = UtilsModule.class)
+    abstract LoginActivity bindLoginActivity();
 }

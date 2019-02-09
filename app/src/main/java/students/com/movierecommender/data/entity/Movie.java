@@ -4,6 +4,7 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -11,7 +12,7 @@ import java.util.Date;
  * Created by Kamil Gonska on sty, 2019
  */
 @Entity
-public class Movie {
+public class Movie implements Serializable {
     @PrimaryKey
     private Integer id;
     private String description;

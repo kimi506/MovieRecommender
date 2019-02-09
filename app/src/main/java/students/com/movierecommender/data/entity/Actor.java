@@ -1,9 +1,11 @@
 package students.com.movierecommender.data.entity;
 
+import java.io.Serializable;
+
 /**
  * Created by Kamil Gonska on sty, 2019
  */
-public class Actor {
+public class Actor implements Serializable {
     private Long id;
     private String name;
     private String surname;
