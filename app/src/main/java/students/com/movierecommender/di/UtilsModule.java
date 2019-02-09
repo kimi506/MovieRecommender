@@ -3,6 +3,7 @@ package students.com.movierecommender.di;
 import android.app.Application;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.persistence.room.Room;
+import android.content.SharedPreferences;
 import android.util.Base64;
 import com.google.gson.*;
 import dagger.Module;
@@ -66,18 +67,28 @@ public class UtilsModule {
     }
 
     @Provides
+    DirectorService provideDirectorService(Retrofit retrofit) {
+        return retrofit.create(DirectorService.class);
+    }
+
+    @Provides
+    ReviewService provideReviewService(Retrofit retrofit) {
+        return retrofit.create(ReviewService.class);
+    }
+
+    @Provides
     OkHttpClient getRequestHeader() {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+            httpClient.addInterceptor(chain -> {
+                Request original = chain.request();
+                Request request = original.newBuilder()
+                        .build();
+                return chain.proceed(request);
+            })
 
-        httpClient.addInterceptor(chain -> {
-            Request original = chain.request();
-            Request request = original.newBuilder()
-                    .build();
-            return chain.proceed(request);
-        })
-                .connectTimeout(100, TimeUnit.SECONDS)
-                .writeTimeout(100, TimeUnit.SECONDS)
-                .readTimeout(300, TimeUnit.SECONDS);
+                    .connectTimeout(100, TimeUnit.SECONDS)
+                    .writeTimeout(100, TimeUnit.SECONDS)
+                    .readTimeout(300, TimeUnit.SECONDS);
         return httpClient.build();
     }
 
@@ -122,7 +133,17 @@ public class UtilsModule {
     }
 
     @Provides
-    ViewModelProvider.Factory provideViewModelFactory(MovieRepository movieRepository, ActorRepository actorRepository) {
-        return new ViewModelFactory(movieRepository, actorRepository);
+    DirectorRepository provideDirectorRepository(DirectorService directorService) {
+        return new DirectorRepository(directorService);
+    }
+
+    @Provides
+    ReviewRepository provideReviewRepository(ReviewService reviewService) {
+        return new ReviewRepository(reviewService);
+    }
+
+    @Provides
+    ViewModelProvider.Factory provideViewModelFactory(MovieRepository movieRepository, ActorRepository actorRepository, AuthRepository authRepository, DirectorRepository directorRepository, ReviewRepository reviewRepository) {
+        return new ViewModelFactory(movieRepository, actorRepository, authRepository, directorRepository, reviewRepository);
     }
 }
