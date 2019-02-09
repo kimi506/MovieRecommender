@@ -2,25 +2,19 @@ package students.com.movierecommender.view;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
 import io.reactivex.annotations.Nullable;
-import students.com.movierecommender.MyApplication;
 import students.com.movierecommender.R;
 import students.com.movierecommender.data.entity.Movie;
 import students.com.movierecommender.utils.ViewModelFactory;
 import students.com.movierecommender.viewmodel.MovieViewModel;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
 import java.util.List;
 
 public class MovieActivity extends AppCompatActivity {
@@ -32,9 +26,6 @@ public class MovieActivity extends AppCompatActivity {
     @Inject
     ViewModelFactory viewModelFactory;
     MovieViewModel movieViewModel;
-
-//    @BindView(R.id.id_movie)
-//    EditText idMovie;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,7 +42,6 @@ public class MovieActivity extends AppCompatActivity {
         listView = findViewById(R.id.list);
 
         movieViewModel.hitAllMovies();
-
     }
 
     private void renderMovieList(List<Movie> movies) {

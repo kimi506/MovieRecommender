@@ -2,6 +2,7 @@ package students.com.movierecommender.di;
 
 import android.app.Application;
 import android.arch.lifecycle.ViewModelProvider;
+import android.arch.persistence.room.Room;
 import android.util.Base64;
 import com.google.gson.*;
 import dagger.Module;

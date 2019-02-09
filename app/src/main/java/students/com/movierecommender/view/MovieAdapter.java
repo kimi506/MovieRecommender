@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.design.widget.Snackbar;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,14 +14,15 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import students.com.movierecommender.R;
-import students.com.movierecommender.data.model.Movie;
+import students.com.movierecommender.data.entity.Movie;
+
 import java.util.List;
 
 
 /**
  * Created by db on 09/02/19.
  */
-public class MovieAdapter extends ArrayAdapter<Movie> implements View.OnClickListener{
+public class MovieAdapter extends ArrayAdapter<Movie> implements View.OnClickListener {
 
     private List<Movie> movies;
     Context mContext;
@@ -38,17 +38,16 @@ public class MovieAdapter extends ArrayAdapter<Movie> implements View.OnClickLis
     public MovieAdapter(List<Movie> data, Context context) {
         super(context, R.layout.movie_item_row, data);
         this.movies = data;
-        this.mContext=context;
+        this.mContext = context;
     }
 
     @Override
     public void onClick(View v) {
-        int position=(Integer) v.getTag();
-        Object object= getItem(position);
-        Movie movieModel=(Movie)object;
+        int position = (Integer) v.getTag();
+        Object object = getItem(position);
+        Movie movieModel = (Movie) object;
 
-        switch (v.getId())
-        {
+        switch (v.getId()) {
             case R.id.item_info:
                 Snackbar.make(v, "Type: " + movieModel.getMovieTypes() +
                         "\nProduction year: " + movieModel.getProductionYear(), Snackbar.LENGTH_LONG)
@@ -76,12 +75,12 @@ public class MovieAdapter extends ArrayAdapter<Movie> implements View.OnClickLis
             viewHolder.frontImage = (ImageView) convertView.findViewById(R.id.front_image);
             viewHolder.info = (ImageView) convertView.findViewById(R.id.item_info);
 
-            result=convertView;
+            result = convertView;
 
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
-            result=convertView;
+            result = convertView;
         }
 
         Animation animation = AnimationUtils.loadAnimation(mContext, (position > lastPosition) ? R.anim.up_from_bottom : R.anim.down_from_top);
