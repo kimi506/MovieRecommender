@@ -55,10 +55,10 @@ public class UtilsModule {
         return retrofit.create(MovieService.class);
     }
 
-    @Provides
-    AuthService provideAuthService(Retrofit retrofit) {
-        return retrofit.create(AuthService.class);
-    }
+//    @Provides
+//    AuthService provideAuthService(Retrofit retrofit) {
+//        return retrofit.create(AuthService.class);
+//    }
 
     @Provides
     ActorService provideActorService(Retrofit retrofit) {
@@ -111,10 +111,10 @@ public class UtilsModule {
         return new MovieRepository(movieService, localMovieService, executor);
     }
 
-    @Provides
-    AuthRepository provideAuthRepository(AuthService authService) {
-        return new AuthRepository(authService);
-    }
+//    @Provides
+//    AuthRepository provideAuthRepository(AuthService authService) {
+//        return new AuthRepository(authService);
+//    }
 
     @Provides
     ActorRepository provideActorRepository(ActorService actorService) {

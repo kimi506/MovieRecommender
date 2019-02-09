@@ -24,7 +24,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.LoginActivity" />
-        <activity android:name=".view.MovieActivity"></activity>
         <activity android:name=".view.MainActivity"></activity>
     </application>
 
