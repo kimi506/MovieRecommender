@@ -5,6 +5,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Path;
 import students.com.movierecommender.data.entity.Movie;
+import students.com.movierecommender.data.entity.MovieType;
 import students.com.movierecommender.utils.Urls;
 
 import java.util.List;
@@ -21,5 +22,8 @@ public interface MovieService {
 
     @GET(Urls.USERS + "{idUser}/" + Urls.RECOMMENDATION)
     Observable<List<Movie>> getRecommendedMovies(@Header("Authorization") String token, @Path("idUser") Integer idUser);
+
+    @GET(Urls.USERS + "{idMovie}/" + Urls.TYPES)
+    Observable<List<MovieType>> getMovieTypes(@Path("idMovie") Integer idMovie);
 
 }

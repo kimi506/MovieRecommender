@@ -19,7 +19,7 @@ public class ActorViewModel extends ViewModel {
     private final CompositeDisposable disposables = new CompositeDisposable();
 
     private final MutableLiveData<List<Actor>> actorsLiveData = new MutableLiveData<>();
-
+    private final MutableLiveData<List<Actor>> actorsByMovieLiveData = new MutableLiveData<>();
     private final MutableLiveData<Actor> actorLiveData = new MutableLiveData<>();
 
     public ActorViewModel(ActorRepository actorRepository) {
@@ -32,6 +32,10 @@ public class ActorViewModel extends ViewModel {
 
     public MutableLiveData<Actor> getActorLiveData() {
         return actorLiveData;
+    }
+
+    public MutableLiveData<List<Actor>> getActorsByMovieLiveData() {
+        return actorsByMovieLiveData;
     }
 
     public void hitAllActors() {
@@ -51,6 +55,16 @@ public class ActorViewModel extends ViewModel {
                 .subscribe(
                         actorLiveData::setValue,
                         throwable -> actorLiveData.setValue(new Actor())
+                ));
+    }
+
+    public void hitActorByIdMovie(Integer idMovie) {
+        disposables.add(actorRepository.getActorsByIdMovie(idMovie)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        actorsByMovieLiveData::setValue,
+                        throwable -> actorsByMovieLiveData.setValue(Arrays.asList(new Actor()))
                 ));
     }
 }

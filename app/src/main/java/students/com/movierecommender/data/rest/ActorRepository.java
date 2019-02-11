@@ -27,4 +27,8 @@ public class ActorRepository {
         return actorService.getActorById(id);
     }
 
+    public Observable<List<Actor>> getActorsByIdMovie(Integer idMovie) {
+        return actorService.getActorsByIdMovie(idMovie);
+    }
+
 }

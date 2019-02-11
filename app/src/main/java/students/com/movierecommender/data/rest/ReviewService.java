@@ -19,7 +19,7 @@ public interface ReviewService {
     @GET(Urls.REVIEWS + "{id}")
     Observable<Review> getReviewById(@Path("id") Integer id);
 
-    @GET(Urls.MOVIES + "{id}/reviews")
+    @GET(Urls.MOVIES + "{id}/" + Urls.REVIEWS)
     Observable<List<Review>> getReviewsByIdMovie(@Path("id") Integer idMovie);
 
     @POST(Urls.REVIEWS)

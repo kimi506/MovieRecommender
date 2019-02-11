@@ -12,5 +12,6 @@ public class Urls {
     public static final String AUTH = "authenticate/";
     public static final String USERS = "users/";
     public static final String RECOMMENDATION = "recommendation/";
+    public static final String TYPES = "types/";
     public static String TOKEN ="";
 }

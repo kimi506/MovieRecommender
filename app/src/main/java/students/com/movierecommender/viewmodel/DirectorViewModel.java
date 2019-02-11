@@ -19,7 +19,7 @@ public class DirectorViewModel extends ViewModel {
     private final CompositeDisposable disposables = new CompositeDisposable();
 
     private final MutableLiveData<List<Director>> directorsLiveData = new MutableLiveData<>();
-
+    private final MutableLiveData<List<Director>> directorsByMovieLiveData = new MutableLiveData<>();
     private final MutableLiveData<Director> directorLiveData = new MutableLiveData<>();
 
     public DirectorViewModel(DirectorRepository directorRepository) {
@@ -34,6 +34,9 @@ public class DirectorViewModel extends ViewModel {
         return directorLiveData;
     }
 
+    public MutableLiveData<List<Director>> getDirectorsByMovieLiveData() {
+        return directorsByMovieLiveData;
+    }
 
     public void hitAllDirectors() {
         disposables.add(directorRepository.getAllDirectors()
@@ -52,6 +55,16 @@ public class DirectorViewModel extends ViewModel {
                 .subscribe(
                         directorLiveData::setValue,
                         throwable -> directorLiveData.setValue(new Director())
+                ));
+    }
+
+    public void hitDirectorByIdMovie(Integer idMovie) {
+        disposables.add(directorRepository.getDirectorsByIdMovie(idMovie)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        directorsByMovieLiveData::setValue,
+                        throwable -> directorsByMovieLiveData.setValue(Arrays.asList(new Director()))
                 ));
     }
 }
