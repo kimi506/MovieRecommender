@@ -26,4 +26,8 @@ public class DirectorRepository {
     public Observable<Director> getDirectorById(Integer id){
         return directorService.getDirectorById(id);
     }
+
+    public Observable<List<Director>> getDirectorsByIdMovie(Integer idMovie){
+        return directorService.getDirectorsByIdMovie(idMovie);
+    }
 }
