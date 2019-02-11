@@ -1,5 +1,6 @@
 package students.com.movierecommender.view.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -12,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import students.com.movierecommender.R;
 import students.com.movierecommender.data.entity.Movie;
+import students.com.movierecommender.view.SingleMovieActivity;
 import students.com.movierecommender.view.adapter.MovieAdapter;
 
 import java.util.ArrayList;
@@ -40,10 +42,11 @@ public class MoviesFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Movie dataModel = movies.get(position);
+                Movie movieModel = movies.get(position);
 
-                Snackbar.make(view, dataModel.getName(), Snackbar.LENGTH_LONG)
-                        .setAction("No action", null).show();
+                Intent intent = new Intent(getActivity(), SingleMovieActivity.class);
+                intent.putExtra("movieId", movieModel.getId().toString());
+                startActivity(intent);
             }
         });
         return rootView;
