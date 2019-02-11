@@ -1,6 +1,8 @@
 package students.com.movierecommender.view;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -8,6 +10,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import butterknife.ButterKnife;
@@ -20,6 +24,7 @@ import students.com.movierecommender.view.fragments.ActorsFragment;
 import students.com.movierecommender.view.fragments.MoviesFragment;
 import students.com.movierecommender.viewmodel.ActorViewModel;
 import students.com.movierecommender.viewmodel.MovieViewModel;
+
 import javax.inject.Inject;
 import java.util.List;
 
@@ -27,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
     @Inject
     ViewModelFactory viewModelFactory;
 
-    private List<Movie> recommendedMovies;
     private List<Movie> movies;
     private List<Actor> actors;
     private MovieViewModel movieViewModel;
@@ -56,6 +60,30 @@ public class MainActivity extends AppCompatActivity {
 
         movieViewModel.hitAllMovies();
         actorViewModel.hitAllActors();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.top_settings, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.about_dev:
+                // TODO
+                break;
+            case R.id.logout:
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+                SharedPreferences preferences = getSharedPreferences("myPrefs", MODE_PRIVATE);
+                preferences.edit().remove("token").commit();
+                break;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void renderMovieList(List<Movie> movies) {

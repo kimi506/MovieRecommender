@@ -10,4 +10,6 @@
     <string name="actors">Actors</string>
     <string name="movies">Movies</string>
     <string name="title_activity_actor">ActorActivity</string>
+    <string name="logout">Logout</string>
+    <string name="about">About</string>
 </resources>

@@ -3,6 +3,7 @@ package students.com.movierecommender.view;
 import android.app.ProgressDialog;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -36,6 +37,8 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences preferences = getSharedPreferences("myPrefs", MODE_PRIVATE);
+        reload(new Token(preferences.getString("token", "")));
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
@@ -44,7 +47,6 @@ public class LoginActivity extends AppCompatActivity {
 
         loginViewModel = ViewModelProviders.of(this, viewModelFactory).get(LoginViewModel.class);
         loginViewModel.getTokenLiveData().observe(this, this::reload);
-
     }
 
     public void login() {
@@ -69,6 +71,8 @@ public class LoginActivity extends AppCompatActivity {
         if (Urls.TOKEN != null && !Urls.TOKEN.isEmpty()) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
+            SharedPreferences preferences = getSharedPreferences("myPrefs", MODE_PRIVATE);
+            preferences.edit().putString("token", token.getToken()).commit();
         }
     }
 
