@@ -71,6 +71,7 @@ public class LoginActivity extends AppCompatActivity {
         if (Urls.TOKEN != null && !Urls.TOKEN.isEmpty()) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
+            finish();
             SharedPreferences preferences = getSharedPreferences("myPrefs", MODE_PRIVATE);
             preferences.edit().putString("token", token.getToken()).commit();
         }
