@@ -4,13 +4,21 @@
       tools:context="students.com.movierecommender.view.MainActivity">
 
     <item
-            android:id="@+id/about_dev"
-            android:icon="@drawable/info"
-            android:title="@string/about"
-            app:showAsAction="never"/>
-    <item
-            android:id="@+id/logout"
-            android:icon="@drawable/logout"
-            android:title="@string/logout"
-            app:showAsAction="never"/>
+            android:id="@+id/action_more"
+            android:icon="@drawable/ic_more_vert_white"
+            android:title=""
+            app:showAsAction="always">
+        <menu>
+            <item
+                    android:id="@+id/about_dev"
+                    android:icon="@drawable/info_18dp"
+                    android:title="@string/about"
+                    app:showAsAction="ifRoom"/>
+            <item
+                    android:id="@+id/logout"
+                    android:icon="@drawable/logout"
+                    android:title="@string/logout"
+                    app:showAsAction="ifRoom"/>
+        </menu>
+    </item>
 </menu>
