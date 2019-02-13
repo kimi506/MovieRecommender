@@ -13,6 +13,7 @@ import okhttp3.Request;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 import students.com.movierecommender.data.rest.*;
 import students.com.movierecommender.database.DatabaseConfig;
 import students.com.movierecommender.database.dao.LocalMovieService;
@@ -47,6 +48,7 @@ public class UtilsModule {
                 .baseUrl(Urls.BASE_URL)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(okHttpClient)
+                .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
     }
@@ -79,14 +81,8 @@ public class UtilsModule {
     @Provides
     OkHttpClient getRequestHeader() {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-            httpClient.addInterceptor(chain -> {
-                Request original = chain.request();
-                Request request = original.newBuilder()
-                        .build();
-                return chain.proceed(request);
-            })
 
-                    .connectTimeout(100, TimeUnit.SECONDS)
+        httpClient.connectTimeout(100, TimeUnit.SECONDS)
                     .writeTimeout(100, TimeUnit.SECONDS)
                     .readTimeout(300, TimeUnit.SECONDS);
         return httpClient.build();

@@ -16,8 +16,6 @@ import java.util.concurrent.Executor;
  */
 @Singleton
 public class MovieRepository {
-    private static int FRESH_TIMEOUT_IN_MINUTES = 1;
-
     private final MovieService movieService;
     private final LocalMovieService localMovieService;
     private final Executor executor;
@@ -45,6 +43,10 @@ public class MovieRepository {
 
     public Observable<List<MovieType>> getMovieTypes(Integer idMovie) {
         return movieService.getMovieTypes(idMovie);
+    }
+
+    public Observable<List<Movie>> getMoviesByIdActor(Integer idActor) {
+        return movieService.getMoviesByIdActor(idActor);
     }
 
 }

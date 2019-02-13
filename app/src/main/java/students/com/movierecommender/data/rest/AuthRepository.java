@@ -1,6 +1,7 @@
 package students.com.movierecommender.data.rest;
 
-import io.reactivex.Observable;
+import retrofit2.Call;
+import retrofit2.Response;
 import students.com.movierecommender.data.entity.Authentication;
 import students.com.movierecommender.data.entity.Token;
 
@@ -17,7 +18,13 @@ public class AuthRepository {
         this.authService = authService;
     }
 
-    public Observable<Token> getToken(Authentication authentication){
+    public Call<Token> getToken(Authentication authentication) {
         return authService.getToken(authentication);
     }
+
+    public Call<Response<Void>> register(Authentication authentication) {
+        return authService.register(authentication);
+    }
+
+
 }

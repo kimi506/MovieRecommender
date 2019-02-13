@@ -5,12 +5,15 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import dagger.android.AndroidInjection;
 import students.com.movierecommender.R;
 import students.com.movierecommender.data.entity.Authentication;
@@ -47,7 +50,40 @@ public class LoginActivity extends AppCompatActivity {
 
         loginViewModel = ViewModelProviders.of(this, viewModelFactory).get(LoginViewModel.class);
         loginViewModel.getTokenLiveData().observe(this, this::reload);
+        loginViewModel.getRegisterResponseCode().observe(this, this::acceptRegistration);
     }
+
+    @OnClick(R.id.register)
+    public void register(View view) {
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(LoginActivity.this);
+        View mView = getLayoutInflater().inflate(R.layout.dialog_login, null);
+        EditText mEmail = (EditText) mView.findViewById(R.id.etEmail);
+        EditText mPassword = (EditText) mView.findViewById(R.id.etPassword);
+        Button mLogin = (Button) mView.findViewById(R.id.btnLogin);
+
+        mBuilder.setView(mView);
+        mBuilder.create();
+        final AlertDialog dialog = mBuilder.create();
+        dialog.show();
+        mLogin.setOnClickListener(view1 -> {
+            Authentication authentication = new Authentication(mEmail.getText().toString(), mPassword.getText().toString(), mEmail.getText().toString());
+            loginViewModel.register(authentication);
+            dialog.dismiss();
+        });
+    }
+
+    private void acceptRegistration(Integer responseCode) {
+        if (responseCode != null && responseCode == 200) {
+            Toast.makeText(LoginActivity.this,
+                    R.string.success_login_msg,
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(LoginActivity.this,
+                    R.string.success_login_msg,
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
     public void login() {
         loginButton.setEnabled(false);
@@ -87,4 +123,5 @@ public class LoginActivity extends AppCompatActivity {
         loginViewModel.hitTokenByAuth(auth);
         login();
     }
+
 }

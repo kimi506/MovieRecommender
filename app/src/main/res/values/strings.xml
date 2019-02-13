@@ -14,4 +14,9 @@
     <string name="about">About</string>
     <string name="aboutDev">Authors</string>
     <string name="authors">\n Daniel Babiak \n Kamil Gonska \n Łukasz Kępka</string>
+    <string name="register">Sign in</string>
+    <string name="success_login_msg">Successful</string>
+    <string name="error_login_msg">Invalid data</string>
+    <string name="login_label">Login</string>
+    <string name="email">Email</string>
 </resources>

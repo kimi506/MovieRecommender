@@ -22,6 +22,7 @@ import dagger.android.AndroidInjection;
 import students.com.movierecommender.R;
 import students.com.movierecommender.data.entity.Actor;
 import students.com.movierecommender.data.entity.Movie;
+import students.com.movierecommender.data.entity.Token;
 import students.com.movierecommender.utils.ViewModelFactory;
 import students.com.movierecommender.view.fragments.ActorsFragment;
 import students.com.movierecommender.view.fragments.MoviesFragment;

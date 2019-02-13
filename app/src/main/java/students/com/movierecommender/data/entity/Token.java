@@ -5,12 +5,22 @@ package students.com.movierecommender.data.entity;
  */
 public class Token {
     private String token;
+    private Integer id;
 
     public Token() {
     }
 
     public Token(String token) {
         this.token = token;
+    }
+
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getToken() {
