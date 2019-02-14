@@ -3,7 +3,6 @@ package students.com.movierecommender.view;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -22,7 +21,7 @@ import dagger.android.AndroidInjection;
 import students.com.movierecommender.R;
 import students.com.movierecommender.data.entity.Actor;
 import students.com.movierecommender.data.entity.Movie;
-import students.com.movierecommender.data.entity.Token;
+import students.com.movierecommender.utils.SharedPrefHelper;
 import students.com.movierecommender.utils.ViewModelFactory;
 import students.com.movierecommender.view.fragments.ActorsFragment;
 import students.com.movierecommender.view.fragments.MoviesFragment;
@@ -47,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        SharedPrefHelper.getInstance().Initialize(getApplicationContext());
 
         ButterKnife.bind(this);
 
@@ -84,10 +84,10 @@ public class MainActivity extends AppCompatActivity {
                 showDialog();
                 break;
             case R.id.logout:
+                SharedPrefHelper.getInstance().removeToken();
+                finish();
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
-                SharedPreferences preferences = getSharedPreferences("myPrefs", MODE_PRIVATE);
-                preferences.edit().remove("token").commit();
                 break;
             default:
                 break;
@@ -95,13 +95,13 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void showDialog(){
+    private void showDialog() {
         final AlertDialog.Builder dialog = new AlertDialog.Builder(this, R.style.Theme_AppCompat_Light_Dialog_Alert).setTitle(R.string.aboutDev).setMessage(R.string.authors);
 
         final AlertDialog alert = dialog.create();
         alert.show();
 
-        final Handler handler  = new Handler();
+        final Handler handler = new Handler();
         final Runnable runnable = new Runnable() {
             @Override
             public void run() {

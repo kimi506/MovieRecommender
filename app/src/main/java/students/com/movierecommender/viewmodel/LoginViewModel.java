@@ -7,6 +7,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import students.com.movierecommender.data.entity.Authentication;
+import students.com.movierecommender.data.entity.ResponseMessage;
 import students.com.movierecommender.data.entity.Token;
 import students.com.movierecommender.data.rest.AuthRepository;
 
@@ -21,7 +22,7 @@ public class LoginViewModel extends ViewModel {
 
     private final CompositeDisposable disposables = new CompositeDisposable();
     private final MutableLiveData<Token> tokenLiveData = new MutableLiveData<>();
-    private final MutableLiveData<Integer> registerResponseCode = new MutableLiveData<>();
+    private final MutableLiveData<String> registerResponseCode = new MutableLiveData<>();
 
     @Inject
     public LoginViewModel(AuthRepository authRepository) {
@@ -32,7 +33,7 @@ public class LoginViewModel extends ViewModel {
         return tokenLiveData;
     }
 
-    public MutableLiveData<Integer> getRegisterResponseCode() {
+    public MutableLiveData<String> getRegisterResponseCode() {
         return registerResponseCode;
     }
 
@@ -55,18 +56,18 @@ public class LoginViewModel extends ViewModel {
     }
 
     public void register(Authentication authentication) {
-        authRepository.register(authentication).enqueue(new Callback<Response<Void>>() {
+        authRepository.register(authentication).enqueue(new Callback<ResponseMessage>() {
             @Override
-            public void onResponse(Call<Response<Void>> call, Response<Response<Void>> response) {
-                if (response.code() == 200) {
-                    registerResponseCode.setValue(response.code());
+            public void onResponse(Call<ResponseMessage> call, Response<ResponseMessage> response) {
+                if (response.errorBody() == null) {
+                    registerResponseCode.setValue("Successful");
                 } else {
-                    registerResponseCode.setValue(null);
+                    registerResponseCode.setValue("Incorrect registration");
                 }
             }
 
             @Override
-            public void onFailure(Call<Response<Void>> call, Throwable t) {
+            public void onFailure(Call<ResponseMessage> call, Throwable t) {
                 registerResponseCode.setValue(null);
             }
         });

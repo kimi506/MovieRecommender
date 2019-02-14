@@ -6,6 +6,7 @@ import retrofit2.http.Body;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import students.com.movierecommender.data.entity.Authentication;
+import students.com.movierecommender.data.entity.ResponseMessage;
 import students.com.movierecommender.data.entity.Token;
 import students.com.movierecommender.utils.Urls;
 
@@ -19,5 +20,5 @@ public interface AuthService {
     Call<Token> getToken(@Body Authentication authentication);
 
     @POST(Urls.USERS + Urls.REGISTER)
-    Call<Response<Void>> register(@Body Authentication authentication);
+    Call<ResponseMessage> register(@Body Authentication authentication);
 }

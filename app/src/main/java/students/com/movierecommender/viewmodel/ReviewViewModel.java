@@ -5,6 +5,9 @@ import android.arch.lifecycle.ViewModel;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import students.com.movierecommender.data.entity.Review;
 import students.com.movierecommender.data.rest.ReviewRepository;
 
@@ -67,16 +70,19 @@ public class ReviewViewModel extends ViewModel {
                 ));
     }
 
-    public void hitReviewsByIdMovie(Review review) {
-        disposables.add(reviewRepository.insertReview(review)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        result -> {
-                            hitAllReviews();
-                        },
-                        throwable -> throwable.printStackTrace()
-                ));
+    public void insertReview(Review review) {
+        reviewRepository.insertReview(review).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+
+            }
+        });
+
     }
 
 }

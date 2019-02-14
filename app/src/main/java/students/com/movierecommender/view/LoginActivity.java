@@ -3,7 +3,6 @@ package students.com.movierecommender.view;
 import android.app.ProgressDialog;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -18,7 +17,7 @@ import dagger.android.AndroidInjection;
 import students.com.movierecommender.R;
 import students.com.movierecommender.data.entity.Authentication;
 import students.com.movierecommender.data.entity.Token;
-import students.com.movierecommender.utils.Urls;
+import students.com.movierecommender.utils.SharedPrefHelper;
 import students.com.movierecommender.utils.ViewModelFactory;
 import students.com.movierecommender.viewmodel.LoginViewModel;
 
@@ -40,8 +39,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        SharedPreferences preferences = getSharedPreferences("myPrefs", MODE_PRIVATE);
-        reload(new Token(preferences.getString("token", "")));
+        SharedPrefHelper.getInstance().Initialize(getApplicationContext());
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
@@ -51,15 +49,17 @@ public class LoginActivity extends AppCompatActivity {
         loginViewModel = ViewModelProviders.of(this, viewModelFactory).get(LoginViewModel.class);
         loginViewModel.getTokenLiveData().observe(this, this::reload);
         loginViewModel.getRegisterResponseCode().observe(this, this::acceptRegistration);
+
+        reload(new Token(SharedPrefHelper.getInstance().getToken()));
     }
 
     @OnClick(R.id.register)
     public void register(View view) {
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(LoginActivity.this);
         View mView = getLayoutInflater().inflate(R.layout.dialog_login, null);
-        EditText mEmail = (EditText) mView.findViewById(R.id.etEmail);
-        EditText mPassword = (EditText) mView.findViewById(R.id.etPassword);
-        Button mLogin = (Button) mView.findViewById(R.id.btnLogin);
+        EditText mEmail = mView.findViewById(R.id.etEmail);
+        EditText mPassword = mView.findViewById(R.id.etPassword);
+        Button mLogin = mView.findViewById(R.id.btnLogin);
 
         mBuilder.setView(mView);
         mBuilder.create();
@@ -72,14 +72,18 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void acceptRegistration(Integer responseCode) {
-        if (responseCode != null && responseCode == 200) {
+    private void acceptRegistration(String responseMessage) {
+        if (responseMessage != null && responseMessage.isEmpty()) {
             Toast.makeText(LoginActivity.this,
                     R.string.success_login_msg,
                     Toast.LENGTH_SHORT).show();
+        } else if (responseMessage != null && !responseMessage.isEmpty()) {
+            Toast.makeText(LoginActivity.this,
+                    responseMessage,
+                    Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(LoginActivity.this,
-                    R.string.success_login_msg,
+                    R.string.error_login_msg,
                     Toast.LENGTH_SHORT).show();
         }
     }
@@ -99,23 +103,21 @@ public class LoginActivity extends AppCompatActivity {
                         loginButton.setEnabled(true);
                         progressDialog.dismiss();
                     }
-                }, 3000);
+                }, 2000);
     }
 
     private void reload(Token token) {
-        Urls.TOKEN = token.getToken();
-        if (Urls.TOKEN != null && !Urls.TOKEN.isEmpty()) {
+        if (token != null) {
+            SharedPrefHelper.getInstance().saveToken(token.getToken());
+        }
+
+        if (SharedPrefHelper.getInstance().getToken() != null && !SharedPrefHelper.getInstance().getToken().isEmpty()) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();
-            SharedPreferences preferences = getSharedPreferences("myPrefs", MODE_PRIVATE);
-            preferences.edit().putString("token", token.getToken()).commit();
+            SharedPrefHelper.getInstance().saveIdUser(token.getId());
+            SharedPrefHelper.getInstance().saveToken(token.getToken());
         }
-    }
-
-    public void testActor(View view) {
-        Authentication auth = new Authentication("testuser@gmail.com", "TestUser1!");
-        loginViewModel.hitTokenByAuth(auth);
     }
 
     public void logIn(View view) {
