@@ -1,15 +1,18 @@
 package students.com.movierecommender.data.entity;
 
+import java.io.Serializable;
+
 /**
  * Created by Kamil Gonska on sty, 2019
  */
-public class Review {
+public class Review implements Serializable {
     private Integer id;
     private String text;
     private Integer rating;
     private Integer movieId;
     private Integer userId;
     private Movie movie;
+    private User user;
 
     public Integer getId() {
         return id;
@@ -57,5 +60,13 @@ public class Review {
 
     public void setMovie(Movie movie) {
         this.movie = movie;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

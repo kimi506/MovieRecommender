@@ -62,12 +62,12 @@ public class ReviewViewModel extends ViewModel {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        reviewsLiveData::setValue,
+                        reviewsLiveDataByMovie::setValue,
                         throwable -> reviewsLiveDataByMovie.setValue(Arrays.asList(new Review()))
                 ));
     }
 
-    public void hitReviewsByIdMovie(Review review) {
+    public void insertReview(Review review) {
         disposables.add(reviewRepository.insertReview(review)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

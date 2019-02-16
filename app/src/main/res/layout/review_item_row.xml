@@ -1,0 +1,54 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:id="@+id/user_container">
+
+        <TextView
+            android:id="@+id/user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:fontFamily="@font/roboto"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@android:color/black" />
+
+        <RatingBar
+            android:id="@+id/rating"
+            android:layout_marginStart="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/user_name"
+            style="?android:attr/ratingBarStyleSmall"
+            android:numStars="10"
+            android:stepSize="0.1"
+            android:progressTint="#ffe500"
+            android:secondaryProgressTint="#ffe500"
+            android:isIndicator="true" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/review_text"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/user_container"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/roboto"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@android:color/black" />
+</RelativeLayout>
+

@@ -47,5 +47,8 @@ public class MovieRepository {
         return movieService.getMovieTypes(idMovie);
     }
 
+    public Observable<List<Movie>> getMoviesByIdActor(Integer idActor) {
+        return movieService.getMoviesByIdActor(idActor);
+    }
 }
 

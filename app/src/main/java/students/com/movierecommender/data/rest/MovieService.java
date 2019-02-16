@@ -23,7 +23,9 @@ public interface MovieService {
     @GET(Urls.USERS + "{idUser}/" + Urls.RECOMMENDATION)
     Observable<List<Movie>> getRecommendedMovies(@Header("Authorization") String token, @Path("idUser") Integer idUser);
 
-    @GET(Urls.USERS + "{idMovie}/" + Urls.TYPES)
+    @GET(Urls.MOVIES + "{idMovie}/" + Urls.TYPES)
     Observable<List<MovieType>> getMovieTypes(@Path("idMovie") Integer idMovie);
 
+    @GET(Urls.ACTORS + "{idActor}/" + Urls.MOVIES)
+    Observable<List<Movie>> getMoviesByIdActor(@Path("idActor") Integer idActor);
 }

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.AdapterView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import students.com.movierecommender.R;
 import students.com.movierecommender.data.entity.Movie;

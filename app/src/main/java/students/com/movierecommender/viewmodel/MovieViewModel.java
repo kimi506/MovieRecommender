@@ -23,6 +23,7 @@ public class MovieViewModel extends ViewModel {
     private final MutableLiveData<List<Movie>> moviesRecommendedLiveData = new MutableLiveData<>();
     private final MutableLiveData<List<MovieType>> movieTypesLiveData = new MutableLiveData<>();
     private final MutableLiveData<Movie> movieLiveData = new MutableLiveData<>();
+    private final MutableLiveData<List<Movie>> moviesByIdActorLiveData = new MutableLiveData<>();
 
     public MovieViewModel(MovieRepository movieRepository) {
         this.movieRepository = movieRepository;
@@ -43,6 +44,8 @@ public class MovieViewModel extends ViewModel {
     public MutableLiveData<List<MovieType>> getMovieTypesLiveData() {
         return movieTypesLiveData;
     }
+
+    public MutableLiveData<List<Movie>> getMoviesByIdActorLiveData() { return moviesByIdActorLiveData; }
 
     public void hitAllMovies() {
         disposables.add(movieRepository.getAllMovies()
@@ -83,6 +86,17 @@ public class MovieViewModel extends ViewModel {
                 .subscribe(
                         movieTypesLiveData::setValue,
                         throwable -> movieTypesLiveData.setValue(Arrays.asList(new MovieType()))
+                ));
+    }
+
+    public void hiMoviesByIdActor(Integer idActor) {
+        disposables.add(movieRepository.getMoviesByIdActor(idActor)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        moviesByIdActorLiveData::setValue,
+                        throwable ->
+                                moviesByIdActorLiveData.setValue(Arrays.asList(new Movie()))
                 ));
     }
 
