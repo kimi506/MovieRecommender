@@ -32,7 +32,7 @@ public class ReviewRepository {
         return reviewService.getReviewsByIdMovie(idMovie);
     }
 
-    public Call<Void> insertReview(Review review) {
+    public Observable<Void> insertReview(Review review) {
         return reviewService.insertReview(review);
     }
 }

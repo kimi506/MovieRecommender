@@ -47,8 +47,7 @@ public class MovieAdapter extends ArrayAdapter<Movie> implements View.OnClickLis
 
         switch (v.getId()) {
             case R.id.item_info:
-                Snackbar.make(v, "Type: " + movieModel.getMovieTypes() +
-                        "\nProduction year: " + movieModel.getProductionYear(), Snackbar.LENGTH_LONG)
+                Snackbar.make(v, "Production year: " + movieModel.getProductionYear(), Snackbar.LENGTH_LONG)
                         .setAction("No action", null).show();
                 break;
         }

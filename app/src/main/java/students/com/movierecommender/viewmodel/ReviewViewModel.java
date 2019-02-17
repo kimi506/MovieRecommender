@@ -23,9 +23,11 @@ public class ReviewViewModel extends ViewModel {
     private final MutableLiveData<List<Review>> reviewsLiveData = new MutableLiveData<>();
     private final MutableLiveData<List<Review>> reviewsLiveDataByMovie = new MutableLiveData<>();
     private final MutableLiveData<Review> reviewLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> reviewInserted = new MutableLiveData<>();
 
     public ReviewViewModel(ReviewRepository reviewRepository) {
         this.reviewRepository = reviewRepository;
+        this.reviewInserted.setValue(false);
     }
 
     public MutableLiveData<List<Review>> getReviewsLiveData() {
@@ -34,6 +36,10 @@ public class ReviewViewModel extends ViewModel {
 
     public ReviewRepository getReviewRepository() {
         return reviewRepository;
+    }
+
+    public MutableLiveData<Boolean> getReviewInserted() {
+        return reviewInserted;
     }
 
     public MutableLiveData<List<Review>> getReviewsLiveDataByMovie() {
@@ -65,24 +71,22 @@ public class ReviewViewModel extends ViewModel {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        reviewsLiveData::setValue,
+                        reviewsLiveDataByMovie::setValue,
                         throwable -> reviewsLiveDataByMovie.setValue(Arrays.asList(new Review()))
                 ));
     }
 
     public void insertReview(Review review) {
-        reviewRepository.insertReview(review).enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-
-            }
-
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-
-            }
-        });
-
+        disposables.add(reviewRepository.insertReview(review)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        result -> {
+                            reviewInserted.setValue(true);
+                        },
+                        throwable -> {
+                            reviewInserted.setValue(true);
+                        }
+                ));
     }
-
 }

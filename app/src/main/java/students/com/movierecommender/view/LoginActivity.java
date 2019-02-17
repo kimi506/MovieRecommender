@@ -88,7 +88,6 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-
     public void login() {
         loginButton.setEnabled(false);
 
@@ -115,6 +114,7 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();
+            SharedPrefHelper.getInstance().Initialize(getApplicationContext());
             SharedPrefHelper.getInstance().saveIdUser(token.getId());
             SharedPrefHelper.getInstance().saveToken(token.getToken());
         }
@@ -126,4 +126,9 @@ public class LoginActivity extends AppCompatActivity {
         login();
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        SharedPrefHelper.getInstance().Initialize(getApplicationContext());
+    }
 }

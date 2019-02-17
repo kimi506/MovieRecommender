@@ -3,6 +3,9 @@ package students.com.movierecommender.view;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -36,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     ViewModelFactory viewModelFactory;
 
     private List<Movie> movies;
+    private List<Movie> recommendedMovies;
     private List<Actor> actors;
     private MovieViewModel movieViewModel;
     private ActorViewModel actorViewModel;
@@ -43,10 +47,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPrefHelper.getInstance().Initialize(getApplicationContext());
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        SharedPrefHelper.getInstance().Initialize(getApplicationContext());
 
         ButterKnife.bind(this);
 
@@ -55,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
         movieViewModel = ViewModelProviders.of(this, viewModelFactory).get(MovieViewModel.class);
         movieViewModel.getAllMovies().observe(this, this::renderMovieList);
+        movieViewModel.getMoviesRecommendedLiveData().observe(this, this::renderRecommendedMoviesList);
 
         actorViewModel = ViewModelProviders.of(this, viewModelFactory).get(ActorViewModel.class);
         actorViewModel.getActorsLiveData().observe(this, this::renderActorList);
@@ -63,8 +68,12 @@ public class MainActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        final Drawable upArrow = getResources().getDrawable(R.drawable.back_arrow);
+        upArrow.setColorFilter(Color.parseColor("#FFFFFF"), PorterDuff.Mode.SRC_ATOP);
+        getSupportActionBar().setHomeAsUpIndicator(upArrow);
 
         movieViewModel.hitAllMovies();
+        movieViewModel.hitRecommendedMovie(SharedPrefHelper.getInstance().getIdUser());
         actorViewModel.hitAllActors();
     }
 
@@ -122,11 +131,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void renderMovieList(List<Movie> movies) {
-        if (this.movies == null) {
-            this.movies = movies;
-            loadFragment(MoviesFragment.newInstance(movies));
+        this.movies = movies;
+    }
+
+    private void renderRecommendedMoviesList(List<Movie> recommendedMovies) {
+        if (this.recommendedMovies == null) {
+            this.recommendedMovies = recommendedMovies;
+            loadFragment(MoviesFragment.newInstance(recommendedMovies));
         } else {
-            this.movies = movies;
+            this.recommendedMovies = recommendedMovies;
         }
     }
 
@@ -138,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = item -> {
         switch (item.getItemId()) {
             case R.id.action_recommendations:
-                loadFragment(MoviesFragment.newInstance(movies));
+                loadFragment(MoviesFragment.newInstance(recommendedMovies));
                 return true;
             case R.id.action_actors:
                 loadFragment(ActorsFragment.newInstance(actors));

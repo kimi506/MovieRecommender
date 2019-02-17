@@ -25,5 +25,6 @@ public interface ReviewService {
     Observable<List<Review>> getReviewsByIdMovie(@Path("id") Integer idMovie);
 
     @POST(Urls.REVIEWS)
-    Call<Void> insertReview(@Body Review review);
+    Observable<Void> insertReview(@Body Review review);
+//    Call<Void> insertReview(@Body Review review);
 }

@@ -1,13 +1,16 @@
 package students.com.movierecommender.view.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import students.com.movierecommender.R;
 import students.com.movierecommender.data.entity.Actor;
+import students.com.movierecommender.view.SingleActorActivity;
 import students.com.movierecommender.view.adapter.ActorAdapter;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +31,20 @@ public class ActorsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_actors, container, false);
         ListView listView = rootView.findViewById(R.id.list);
-        ActorAdapter adapter = new ActorAdapter((ArrayList<Actor>) getArguments().getSerializable("actors"), getActivity().getApplicationContext());
+        ArrayList<Actor> actors = (ArrayList<Actor>) getArguments().getSerializable("actors");
+        ActorAdapter adapter = new ActorAdapter(actors, getActivity().getApplicationContext());
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Actor actorModel = actors.get(position);
+
+                Intent intent = new Intent(getActivity(), SingleActorActivity.class);
+                intent.putExtra("actorId", actorModel.getId().toString());
+                startActivity(intent);
+            }
+        });
         return rootView;
     }
 }

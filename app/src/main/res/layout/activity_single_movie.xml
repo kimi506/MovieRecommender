@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".view.SingleMovieActivity">
+
+    <include
+        android:id="@+id/top-toolbar"
+        layout="@layout/top_toolbar" />
+
+    <ScrollView
+        android:id="@+id/createdrill_scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/top-toolbar">
+
+        <RelativeLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/movie_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="20dp"
+                android:paddingRight="5dp">
+
+                <ImageView
+                    android:id="@+id/front_image"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_alignParentStart="true" />
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/front_image"
+                    android:fontFamily="@font/roboto"
+                    android:textSize="17sp"
+                    android:textColor="@android:color/black" />
+
+                <RatingBar
+                    android:id="@+id/rating"
+                    android:layout_marginStart="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/name"
+                    android:layout_toEndOf="@+id/front_image"
+                    android:layout_marginTop="5dp"
+                    style="?android:attr/ratingBarStyleSmall"
+                    android:numStars="10"
+                    android:stepSize="0.1"
+                    android:progressTint="#ffe500"
+                    android:secondaryProgressTint="#ffe500"
+                    android:isIndicator="true" />
+
+                <TextView
+                    android:id="@+id/types_label"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rating"
+                    android:layout_toEndOf="@+id/front_image"
+                    android:fontFamily="@font/roboto"
+                    android:textSize="15sp"
+                    android:text="@string/types_label"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black" />
+
+                <TextView
+                    android:id="@+id/types"
+                    android:layout_marginStart="35dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/types_label"
+                    android:layout_toEndOf="@+id/front_image"
+                    android:fontFamily="@font/roboto"
+                    android:textSize="13sp"
+                    android:text="Dramat"
+                    android:textColor="@android:color/black" />
+
+                <TextView
+                    android:id="@+id/directors_label"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/types"
+                    android:layout_toEndOf="@+id/front_image"
+                    android:fontFamily="@font/roboto"
+                    android:textSize="15sp"
+                    android:text="@string/directors_label"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black" />
+
+                <TextView
+                    android:id="@+id/directors"
+                    android:layout_marginStart="35dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/directors_label"
+                    android:layout_toEndOf="@+id/front_image"
+                    android:fontFamily="@font/roboto"
+                    android:textSize="13sp"
+                    android:textColor="@android:color/black" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:id="@+id/separate_line"
+                android:layout_below="@+id/movie_info"
+                android:layout_marginTop="25dp"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray" />
+
+            <TextView
+                android:id="@+id/actors_label"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="25dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/separate_line"
+                android:fontFamily="@font/roboto"
+                android:textSize="20sp"
+                android:text="@string/actors_label"
+                android:textColor="@android:color/black" />
+
+            <FrameLayout
+                android:id="@+id/actors_frame_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/actors_label"
+                android:layout_marginTop="10dp" />
+
+            <TextView
+                android:id="@+id/reviews_label"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/actors_frame_container"
+                android:fontFamily="@font/roboto"
+                android:textSize="20sp"
+                android:text="@string/reviews_label"
+                android:textColor="@android:color/black" />
+
+            <android.support.design.button.MaterialButton
+                android:id="@+id/add_review_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:textAllCaps="false"
+                android:textSize="16sp"
+                android:layout_below="@+id/reviews_label"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:text="@string/add_review"
+                android:textColor="@color/white"
+                android:onClick="addReview"
+                />
+
+            <FrameLayout
+                android:id="@+id/reviews_frame_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/add_review_button"
+                android:layout_marginTop="10dp" />
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>
