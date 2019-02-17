@@ -1,13 +1,19 @@
 package students.com.movierecommender.view;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.TaskStackBuilder;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import butterknife.ButterKnife;
@@ -15,11 +21,13 @@ import dagger.android.AndroidInjection;
 import students.com.movierecommender.R;
 import students.com.movierecommender.data.entity.Actor;
 import students.com.movierecommender.data.entity.Movie;
+import students.com.movierecommender.utils.SharedPrefHelper;
 import students.com.movierecommender.utils.ViewModelFactory;
 import students.com.movierecommender.view.fragments.ActorsFragment;
 import students.com.movierecommender.view.fragments.MoviesFragment;
 import students.com.movierecommender.viewmodel.ActorViewModel;
 import students.com.movierecommender.viewmodel.MovieViewModel;
+
 import javax.inject.Inject;
 import java.util.List;
 
@@ -27,8 +35,8 @@ public class MainActivity extends AppCompatActivity {
     @Inject
     ViewModelFactory viewModelFactory;
 
-    private List<Movie> recommendedMovies;
     private List<Movie> movies;
+    private List<Movie> recommendedMovies;
     private List<Actor> actors;
     private MovieViewModel movieViewModel;
     private ActorViewModel actorViewModel;
@@ -36,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPrefHelper.getInstance().Initialize(getApplicationContext());
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -47,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
         movieViewModel = ViewModelProviders.of(this, viewModelFactory).get(MovieViewModel.class);
         movieViewModel.getAllMovies().observe(this, this::renderMovieList);
+        movieViewModel.getMoviesRecommendedLiveData().observe(this, this::renderRecommendedMoviesList);
 
         actorViewModel = ViewModelProviders.of(this, viewModelFactory).get(ActorViewModel.class);
         actorViewModel.getActorsLiveData().observe(this, this::renderActorList);
@@ -54,16 +64,76 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView navigation = findViewById(R.id.bottom_navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         movieViewModel.hitAllMovies();
+        movieViewModel.hitRecommendedMovie(SharedPrefHelper.getInstance().getIdUser());
         actorViewModel.hitAllActors();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.top_settings, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            case R.id.about_dev:
+                showDialog();
+                break;
+            case R.id.logout:
+                SharedPrefHelper.getInstance().removeToken();
+                finish();
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+                break;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void showDialog() {
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(this, R.style.Theme_AppCompat_Light_Dialog_Alert).setTitle(R.string.aboutDev).setMessage(R.string.authors);
+
+        final AlertDialog alert = dialog.create();
+        alert.show();
+
+        final Handler handler = new Handler();
+        final Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                if (alert.isShowing()) {
+                    alert.dismiss();
+                }
+            }
+        };
+
+        alert.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                handler.removeCallbacks(runnable);
+            }
+        });
+
+        handler.postDelayed(runnable, 5000);
+    }
+
     private void renderMovieList(List<Movie> movies) {
-        if (this.movies == null) {
-            this.movies = movies;
-            loadFragment(MoviesFragment.newInstance(movies));
+        this.movies = movies;
+    }
+
+    private void renderRecommendedMoviesList(List<Movie> recommendedMovies) {
+        if (this.recommendedMovies == null) {
+            this.recommendedMovies = recommendedMovies;
+            loadFragment(MoviesFragment.newInstance(recommendedMovies));
         } else {
-            this.movies = movies;
+            this.recommendedMovies = recommendedMovies;
         }
     }
 
@@ -75,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = item -> {
         switch (item.getItemId()) {
             case R.id.action_recommendations:
-                loadFragment(MoviesFragment.newInstance(movies));
+                loadFragment(MoviesFragment.newInstance(recommendedMovies));
                 return true;
             case R.id.action_actors:
                 loadFragment(ActorsFragment.newInstance(actors));

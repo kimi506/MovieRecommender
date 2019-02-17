@@ -1,6 +1,7 @@
 package students.com.movierecommender.data.rest;
 
 import io.reactivex.Observable;
+import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -25,4 +26,5 @@ public interface ReviewService {
 
     @POST(Urls.REVIEWS)
     Observable<Void> insertReview(@Body Review review);
+//    Call<Void> insertReview(@Body Review review);
 }

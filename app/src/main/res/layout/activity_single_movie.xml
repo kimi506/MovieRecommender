@@ -143,6 +143,18 @@
                 android:layout_below="@+id/actors_label"
                 android:layout_marginTop="10dp" />
 
+            <TextView
+                android:id="@+id/reviews_label"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/actors_frame_container"
+                android:fontFamily="@font/roboto"
+                android:textSize="20sp"
+                android:text="@string/reviews_label"
+                android:textColor="@android:color/black" />
+
             <android.support.design.button.MaterialButton
                 android:id="@+id/add_review_button"
                 android:layout_width="match_parent"
@@ -150,7 +162,7 @@
                 android:fontFamily="@font/roboto"
                 android:textAllCaps="false"
                 android:textSize="16sp"
-                android:layout_below="@+id/actors_frame_container"
+                android:layout_below="@+id/reviews_label"
                 android:layout_marginTop="15dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
@@ -159,23 +171,11 @@
                 android:onClick="addReview"
                 />
 
-            <TextView
-                android:id="@+id/reviews_label"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="15dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/add_review_button"
-                android:fontFamily="@font/roboto"
-                android:textSize="20sp"
-                android:text="@string/reviews_label"
-                android:textColor="@android:color/black" />
-
             <FrameLayout
                 android:id="@+id/reviews_frame_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/reviews_label"
+                android:layout_below="@+id/add_review_button"
                 android:layout_marginTop="10dp" />
         </RelativeLayout>
     </ScrollView>

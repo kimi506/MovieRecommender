@@ -21,9 +21,9 @@ public class MovieViewModel extends ViewModel {
     private final CompositeDisposable disposables = new CompositeDisposable();
     private final MutableLiveData<List<Movie>> moviesLiveData = new MutableLiveData<>();
     private final MutableLiveData<List<Movie>> moviesRecommendedLiveData = new MutableLiveData<>();
+    private final MutableLiveData<List<Movie>> moviesByIdActorLiveData = new MutableLiveData<>();
     private final MutableLiveData<List<MovieType>> movieTypesLiveData = new MutableLiveData<>();
     private final MutableLiveData<Movie> movieLiveData = new MutableLiveData<>();
-    private final MutableLiveData<List<Movie>> moviesByIdActorLiveData = new MutableLiveData<>();
 
     public MovieViewModel(MovieRepository movieRepository) {
         this.movieRepository = movieRepository;

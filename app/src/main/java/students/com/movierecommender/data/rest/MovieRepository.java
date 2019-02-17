@@ -4,7 +4,7 @@ import io.reactivex.Observable;
 import students.com.movierecommender.data.entity.Movie;
 import students.com.movierecommender.data.entity.MovieType;
 import students.com.movierecommender.database.dao.LocalMovieService;
-import students.com.movierecommender.utils.Urls;
+import students.com.movierecommender.utils.SharedPrefHelper;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -16,8 +16,6 @@ import java.util.concurrent.Executor;
  */
 @Singleton
 public class MovieRepository {
-    private static int FRESH_TIMEOUT_IN_MINUTES = 1;
-
     private final MovieService movieService;
     private final LocalMovieService localMovieService;
     private final Executor executor;
@@ -39,7 +37,7 @@ public class MovieRepository {
     }
 
     public Observable<List<Movie>> getRecommendedMovies(Integer idUser) {
-        String token = "Bearer " + Urls.TOKEN;
+        String token = "Bearer " + SharedPrefHelper.getInstance().getToken();
         return movieService.getRecommendedMovies(token, idUser);
     }
 

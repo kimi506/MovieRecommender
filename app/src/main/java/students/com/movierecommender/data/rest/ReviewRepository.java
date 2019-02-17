@@ -1,6 +1,7 @@
 package students.com.movierecommender.data.rest;
 
 import io.reactivex.Observable;
+import retrofit2.Call;
 import students.com.movierecommender.data.entity.Review;
 
 import javax.inject.Inject;

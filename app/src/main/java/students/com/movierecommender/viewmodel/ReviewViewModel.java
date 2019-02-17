@@ -5,6 +5,9 @@ import android.arch.lifecycle.ViewModel;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import students.com.movierecommender.data.entity.Review;
 import students.com.movierecommender.data.rest.ReviewRepository;
 
@@ -20,9 +23,11 @@ public class ReviewViewModel extends ViewModel {
     private final MutableLiveData<List<Review>> reviewsLiveData = new MutableLiveData<>();
     private final MutableLiveData<List<Review>> reviewsLiveDataByMovie = new MutableLiveData<>();
     private final MutableLiveData<Review> reviewLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> reviewInserted = new MutableLiveData<>();
 
     public ReviewViewModel(ReviewRepository reviewRepository) {
         this.reviewRepository = reviewRepository;
+        this.reviewInserted.setValue(false);
     }
 
     public MutableLiveData<List<Review>> getReviewsLiveData() {
@@ -31,6 +36,10 @@ public class ReviewViewModel extends ViewModel {
 
     public ReviewRepository getReviewRepository() {
         return reviewRepository;
+    }
+
+    public MutableLiveData<Boolean> getReviewInserted() {
+        return reviewInserted;
     }
 
     public MutableLiveData<List<Review>> getReviewsLiveDataByMovie() {
@@ -73,10 +82,11 @@ public class ReviewViewModel extends ViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         result -> {
-                            hitAllReviews();
+                            reviewInserted.setValue(true);
                         },
-                        throwable -> throwable.printStackTrace()
+                        throwable -> {
+                            reviewInserted.setValue(true);
+                        }
                 ));
     }
-
 }

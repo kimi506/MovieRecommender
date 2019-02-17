@@ -14,12 +14,19 @@
     <string name="directors_label">Directors:</string>
     <string name="types_label">Types:</string>
     <string name="movies_label">Movies</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="reviews_label">Reviews</string>
     <string name="add_review">Add review</string>
     <string name="review_hint">Review</string>
     <string name="rating_hint">Rating</string>
     <string name="submit">Submit</string>
+    <string name="logout">Logout</string>
+    <string name="about">About</string>
+    <string name="aboutDev">Authors</string>
+    <string name="authors">\n Daniel Babiak \n Kamil Gonska \n Łukasz Kępka</string>
+    <string name="register">Sign in</string>
+    <string name="success_login_msg">Successful</string>
+    <string name="error_login_msg">Invalid data</string>
+    <string name="login_label">Login</string>
+    <string name="email">Email</string>
 </resources>
